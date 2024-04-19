@@ -1,12 +1,12 @@
 package handler
 
 import (
-	"app/internal/auth"
-	"app/internal/config"
-	"app/internal/download"
-	"app/internal/logger"
-	sess "app/internal/session"
-	"app/internal/user"
+	"github.com/mrumyantsev/video-hosting/internal/auth"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	"github.com/mrumyantsev/video-hosting/internal/download"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
+	sess "github.com/mrumyantsev/video-hosting/internal/session"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 
 	"github.com/gin-gonic/gin"
 )

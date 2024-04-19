@@ -10,11 +10,11 @@ import (
 
 	"github.com/deepch/vdk/av"
 
-	"app/internal/config"
-	sconfig "app/internal/config-stream"
-	"app/internal/logger"
-	msg "app/internal/messages"
-	"app/internal/stream"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	sconfig "github.com/mrumyantsev/video-hosting/internal/config-stream"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
+	msg "github.com/mrumyantsev/video-hosting/internal/messages"
+	"github.com/mrumyantsev/video-hosting/internal/stream"
 
 	"github.com/deepch/vdk/cgo/ffmpeg"
 	"github.com/deepch/vdk/codec/h264parser"

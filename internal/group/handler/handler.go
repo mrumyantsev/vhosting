@@ -1,15 +1,15 @@
 package handler
 
 import (
-	"app/internal/auth"
-	"app/internal/config"
-	"app/internal/group"
-	"app/internal/logger"
-	msg "app/internal/messages"
-	sess "app/internal/session"
-	"app/internal/timedate"
-	"app/internal/user"
 	"github.com/gin-gonic/gin"
+	"github.com/mrumyantsev/video-hosting/internal/auth"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	"github.com/mrumyantsev/video-hosting/internal/group"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
+	msg "github.com/mrumyantsev/video-hosting/internal/messages"
+	sess "github.com/mrumyantsev/video-hosting/internal/session"
+	"github.com/mrumyantsev/video-hosting/internal/timedate"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 )
 
 type GroupHandler struct {

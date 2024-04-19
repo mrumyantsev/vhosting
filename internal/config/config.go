@@ -6,8 +6,8 @@ import (
 	"strings"
 	"sync"
 
-	"app/internal/logger"
-	msg "app/internal/messages"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
+	msg "github.com/mrumyantsev/video-hosting/internal/messages"
 
 	"github.com/spf13/viper"
 )

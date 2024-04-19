@@ -3,9 +3,9 @@ package usecase
 import (
 	"fmt"
 
-	"app/internal/group"
-	"app/internal/user"
 	"github.com/gin-gonic/gin"
+	"github.com/mrumyantsev/video-hosting/internal/group"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 )
 
 func (u *GroupUseCase) SetUserGroups(id int, permIds *group.GroupIds) error {

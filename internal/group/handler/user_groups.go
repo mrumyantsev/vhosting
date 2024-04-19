@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"app/internal/logger"
-	msg "app/internal/messages"
 	"github.com/gin-gonic/gin"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
+	msg "github.com/mrumyantsev/video-hosting/internal/messages"
 )
 
 func (h *GroupHandler) SetUserGroups(ctx *gin.Context) {

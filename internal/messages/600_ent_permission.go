@@ -1,8 +1,8 @@
 package messages
 
 import (
-	"app/internal/logger"
-	perm "app/internal/permission"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
+	perm "github.com/mrumyantsev/video-hosting/internal/permission"
 )
 
 func ErrorCannotGetAllPerms(err error) *logger.Log {

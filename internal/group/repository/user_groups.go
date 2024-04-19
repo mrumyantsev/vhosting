@@ -3,10 +3,10 @@ package repository
 import (
 	"fmt"
 
-	qconsts "app/internal/constants/query"
-	"app/internal/database"
-	"app/internal/group"
-	"app/internal/user"
+	qconsts "github.com/mrumyantsev/video-hosting/internal/constants/query"
+	"github.com/mrumyantsev/video-hosting/internal/database"
+	"github.com/mrumyantsev/video-hosting/internal/group"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 )
 
 func (r *GroupRepository) SetUserGroups(values string) error {

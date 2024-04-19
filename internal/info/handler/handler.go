@@ -1,15 +1,15 @@
 package handler
 
 import (
-	"app/internal/auth"
-	"app/internal/config"
-	sconfig "app/internal/config-stream"
-	"app/internal/info"
-	"app/internal/logger"
-	msg "app/internal/messages"
-	sess "app/internal/session"
-	"app/internal/timedate"
-	"app/internal/user"
+	"github.com/mrumyantsev/video-hosting/internal/auth"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	sconfig "github.com/mrumyantsev/video-hosting/internal/config-stream"
+	"github.com/mrumyantsev/video-hosting/internal/info"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
+	msg "github.com/mrumyantsev/video-hosting/internal/messages"
+	sess "github.com/mrumyantsev/video-hosting/internal/session"
+	"github.com/mrumyantsev/video-hosting/internal/timedate"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 
 	"github.com/gin-gonic/gin"
 )

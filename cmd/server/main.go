@@ -1,10 +1,10 @@
 package main
 
 import (
-	"app/internal/config"
-	logger "app/internal/logger"
-	"app/internal/messages"
-	"app/internal/server"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	logger "github.com/mrumyantsev/video-hosting/internal/logger"
+	"github.com/mrumyantsev/video-hosting/internal/messages"
+	"github.com/mrumyantsev/video-hosting/internal/server"
 
 	"github.com/joho/godotenv"
 )

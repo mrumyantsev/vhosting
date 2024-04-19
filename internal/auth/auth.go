@@ -1,8 +1,8 @@
 package auth
 
 import (
-	sess "app/internal/session"
 	"github.com/gin-gonic/gin"
+	sess "github.com/mrumyantsev/video-hosting/internal/session"
 )
 
 type Namepass struct {

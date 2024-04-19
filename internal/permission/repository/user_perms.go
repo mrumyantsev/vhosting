@@ -3,10 +3,10 @@ package repository
 import (
 	"fmt"
 
-	qconsts "app/internal/constants/query"
-	"app/internal/database"
-	perm "app/internal/permission"
-	"app/internal/user"
+	qconsts "github.com/mrumyantsev/video-hosting/internal/constants/query"
+	"github.com/mrumyantsev/video-hosting/internal/database"
+	perm "github.com/mrumyantsev/video-hosting/internal/permission"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 )
 
 func (r *PermRepository) SetUserPermissions(values string) error {

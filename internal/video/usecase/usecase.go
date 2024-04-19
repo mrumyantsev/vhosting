@@ -3,9 +3,9 @@ package usecase
 import (
 	"strconv"
 
-	"app/internal/user"
-	"app/internal/video"
 	"github.com/gin-gonic/gin"
+	"github.com/mrumyantsev/video-hosting/internal/user"
+	"github.com/mrumyantsev/video-hosting/internal/video"
 )
 
 type VideoUseCase struct {

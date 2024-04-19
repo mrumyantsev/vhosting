@@ -3,9 +3,9 @@ package usecase
 import (
 	"strconv"
 
-	"app/internal/group"
-	"app/internal/user"
 	"github.com/gin-gonic/gin"
+	"github.com/mrumyantsev/video-hosting/internal/group"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 )
 
 type GroupUseCase struct {

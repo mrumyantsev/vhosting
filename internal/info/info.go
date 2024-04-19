@@ -1,8 +1,8 @@
 package info
 
 import (
-	"app/internal/user"
 	"github.com/gin-gonic/gin"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 )
 
 type Info struct {

@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"app/internal/config"
-	"app/internal/logger"
-	msg "app/internal/messages"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
+	msg "github.com/mrumyantsev/video-hosting/internal/messages"
 
 	"github.com/jmoiron/sqlx"
 )

@@ -5,8 +5,8 @@ import (
 	"os"
 	"strconv"
 
-	"app/internal/stream"
-	"app/internal/user"
+	"github.com/mrumyantsev/video-hosting/internal/stream"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 
 	"github.com/gin-gonic/gin"
 )

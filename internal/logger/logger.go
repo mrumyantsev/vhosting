@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"app/internal/timedate"
+	"github.com/mrumyantsev/video-hosting/internal/timedate"
 
 	"github.com/gin-gonic/gin"
 )

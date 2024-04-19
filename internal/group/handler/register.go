@@ -1,13 +1,13 @@
 package handler
 
 import (
-	"app/internal/auth"
-	"app/internal/config"
-	"app/internal/group"
-	"app/internal/logger"
-	sess "app/internal/session"
-	"app/internal/user"
 	"github.com/gin-gonic/gin"
+	"github.com/mrumyantsev/video-hosting/internal/auth"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	"github.com/mrumyantsev/video-hosting/internal/group"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
+	sess "github.com/mrumyantsev/video-hosting/internal/session"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 )
 
 func RegisterHTTPEndpoints(router *gin.Engine, cfg *config.Config, uc group.GroupUseCase, luc logger.LogUseCase,

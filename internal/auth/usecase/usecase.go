@@ -1,11 +1,11 @@
 package usecase
 
 import (
-	"app/internal/auth"
-	"app/internal/config"
-	"app/internal/hasher"
-	"app/internal/headers"
-	sess "app/internal/session"
+	"github.com/mrumyantsev/video-hosting/internal/auth"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	"github.com/mrumyantsev/video-hosting/internal/hasher"
+	"github.com/mrumyantsev/video-hosting/internal/headers"
+	sess "github.com/mrumyantsev/video-hosting/internal/session"
 
 	"github.com/gin-gonic/gin"
 )

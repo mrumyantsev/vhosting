@@ -3,10 +3,10 @@ package usecase
 import (
 	"strconv"
 
-	"app/internal/auth"
-	"app/internal/config"
-	"app/internal/hasher"
-	"app/internal/user"
+	"github.com/mrumyantsev/video-hosting/internal/auth"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	"github.com/mrumyantsev/video-hosting/internal/hasher"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 
 	"github.com/gin-gonic/gin"
 )

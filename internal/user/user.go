@@ -1,8 +1,8 @@
 package user
 
 import (
-	"app/internal/auth"
 	"github.com/gin-gonic/gin"
+	"github.com/mrumyantsev/video-hosting/internal/auth"
 )
 
 type User struct {

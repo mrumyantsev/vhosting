@@ -1,4 +1,4 @@
-module app
+module github.com/mrumyantsev/video-hosting
 
 go 1.18
 

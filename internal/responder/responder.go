@@ -3,7 +3,7 @@ package responder
 import (
 	"reflect"
 
-	"app/internal/logger"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
 
 	"github.com/gin-gonic/gin"
 )

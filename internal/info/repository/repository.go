@@ -3,12 +3,12 @@ package repository
 import (
 	"fmt"
 
-	"app/internal/config"
-	"app/internal/constants"
-	qconsts "app/internal/constants/query"
-	"app/internal/database"
-	"app/internal/info"
-	"app/internal/user"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	"github.com/mrumyantsev/video-hosting/internal/constants"
+	qconsts "github.com/mrumyantsev/video-hosting/internal/constants/query"
+	"github.com/mrumyantsev/video-hosting/internal/database"
+	"github.com/mrumyantsev/video-hosting/internal/info"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 )
 
 type InfoRepository struct {

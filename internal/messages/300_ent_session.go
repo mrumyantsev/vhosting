@@ -1,7 +1,7 @@
 package messages
 
 import (
-	"app/internal/logger"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
 )
 
 func ErrorCannotDeleteSession(err error) *logger.Log {

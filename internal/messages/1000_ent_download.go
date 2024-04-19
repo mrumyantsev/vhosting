@@ -1,8 +1,8 @@
 package messages
 
 import (
-	"app/internal/download"
-	"app/internal/logger"
+	"github.com/mrumyantsev/video-hosting/internal/download"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
 )
 
 func ErrorExtensionIsNotMp4() *logger.Log {

@@ -1,7 +1,7 @@
 package permission
 
 import (
-	"app/internal/user"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 
 	"github.com/gin-gonic/gin"
 )

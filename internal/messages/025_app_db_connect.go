@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"time"
 
-	"app/internal/logger"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
 )
 
 func InfoEstablishedOpenedDBConnection(timeSinceOpen time.Time) *logger.Log {

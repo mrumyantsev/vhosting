@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"app/internal/logger"
-	msg "app/internal/messages"
-	"app/internal/timedate"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
+	msg "github.com/mrumyantsev/video-hosting/internal/messages"
+	"github.com/mrumyantsev/video-hosting/internal/timedate"
 
 	"github.com/gin-gonic/gin"
 )

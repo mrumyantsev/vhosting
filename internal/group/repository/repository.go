@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"reflect"
 
-	"app/internal/config"
-	qconsts "app/internal/constants/query"
-	"app/internal/database"
-	"app/internal/group"
-	"app/internal/user"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	qconsts "github.com/mrumyantsev/video-hosting/internal/constants/query"
+	"github.com/mrumyantsev/video-hosting/internal/database"
+	"github.com/mrumyantsev/video-hosting/internal/group"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 )
 
 type GroupRepository struct {

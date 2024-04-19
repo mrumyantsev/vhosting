@@ -3,9 +3,9 @@ package usecase
 import (
 	"strconv"
 
-	perm "app/internal/permission"
-	"app/internal/user"
 	"github.com/gin-gonic/gin"
+	perm "github.com/mrumyantsev/video-hosting/internal/permission"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 )
 
 type PermUseCase struct {

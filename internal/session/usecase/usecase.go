@@ -1,9 +1,9 @@
 package usecase
 
 import (
-	"app/internal/auth"
-	sess "app/internal/session"
 	"github.com/gin-gonic/gin"
+	"github.com/mrumyantsev/video-hosting/internal/auth"
+	sess "github.com/mrumyantsev/video-hosting/internal/session"
 )
 
 type SessUseCase struct {

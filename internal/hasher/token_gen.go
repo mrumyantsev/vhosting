@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"app/internal/auth"
+	"github.com/mrumyantsev/video-hosting/internal/auth"
 
 	"github.com/dgrijalva/jwt-go"
 )

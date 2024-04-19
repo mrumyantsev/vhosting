@@ -3,8 +3,8 @@ package usecase
 import (
 	"fmt"
 
-	perm "app/internal/permission"
-	"app/internal/user"
+	perm "github.com/mrumyantsev/video-hosting/internal/permission"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 )
 
 func (u *PermUseCase) SetUserPermissions(id int, permIds *perm.PermIds) error {

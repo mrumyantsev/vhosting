@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"reflect"
 
-	"app/internal/auth"
-	"app/internal/config"
-	qconsts "app/internal/constants/query"
-	"app/internal/database"
-	perm "app/internal/permission"
-	"app/internal/user"
+	"github.com/mrumyantsev/video-hosting/internal/auth"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	qconsts "github.com/mrumyantsev/video-hosting/internal/constants/query"
+	"github.com/mrumyantsev/video-hosting/internal/database"
+	perm "github.com/mrumyantsev/video-hosting/internal/permission"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 )
 
 type UserRepository struct {

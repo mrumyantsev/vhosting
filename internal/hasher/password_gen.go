@@ -4,8 +4,8 @@ import (
 	"crypto/sha256"
 	"fmt"
 
-	"app/internal/logger"
-	msg "app/internal/messages"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
+	msg "github.com/mrumyantsev/video-hosting/internal/messages"
 )
 
 func GeneratePasswordHash(password, salt string) string {

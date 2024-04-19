@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"app/internal/config"
-	"app/internal/download"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	"github.com/mrumyantsev/video-hosting/internal/download"
 )
 
 type DownloadUseCase struct {

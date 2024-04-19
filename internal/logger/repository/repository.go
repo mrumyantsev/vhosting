@@ -3,10 +3,10 @@ package repository
 import (
 	"fmt"
 
-	"app/internal/config"
-	qconsts "app/internal/constants/query"
-	"app/internal/database"
-	"app/internal/logger"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	qconsts "github.com/mrumyantsev/video-hosting/internal/constants/query"
+	"github.com/mrumyantsev/video-hosting/internal/database"
+	"github.com/mrumyantsev/video-hosting/internal/logger"
 )
 
 type LogRepository struct {

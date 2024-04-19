@@ -1,8 +1,9 @@
 package stream
 
 import (
-	"app/internal/user"
 	"database/sql"
+
+	"github.com/mrumyantsev/video-hosting/internal/user"
 
 	"github.com/deepch/vdk/av"
 	webrtc "github.com/deepch/vdk/format/webrtcv3"

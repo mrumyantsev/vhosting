@@ -3,11 +3,11 @@ package repository
 import (
 	"fmt"
 
-	"app/internal/auth"
-	"app/internal/config"
-	qconsts "app/internal/constants/query"
-	"app/internal/database"
-	"app/internal/user"
+	"github.com/mrumyantsev/video-hosting/internal/auth"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	qconsts "github.com/mrumyantsev/video-hosting/internal/constants/query"
+	"github.com/mrumyantsev/video-hosting/internal/database"
+	"github.com/mrumyantsev/video-hosting/internal/user"
 )
 
 type AuthRepository struct {
