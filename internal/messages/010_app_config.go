@@ -1,7 +1,7 @@
 package messages
 
 import (
-	"app/pkg/logger"
+	"app/internal/logger"
 )
 
 func WarningCannotConvertCvar(cvarName string, setValue interface{}) *logger.Log {

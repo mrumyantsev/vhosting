@@ -1,15 +1,16 @@
 package handler
 
 import (
+	"app/internal/auth"
+	"app/internal/config"
+	sconfig "app/internal/config-stream"
 	"app/internal/info"
+	"app/internal/logger"
 	msg "app/internal/messages"
 	sess "app/internal/session"
-	"app/pkg/auth"
-	"app/pkg/config"
-	sconfig "app/pkg/config_stream"
-	"app/pkg/logger"
-	"app/pkg/timedate"
-	"app/pkg/user"
+	"app/internal/timedate"
+	"app/internal/user"
+
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,7 +1,8 @@
 package video
 
 import (
-	"app/pkg/user"
+	"app/internal/user"
+
 	"github.com/gin-gonic/gin"
 )
 

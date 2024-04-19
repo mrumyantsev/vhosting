@@ -1,8 +1,8 @@
 package messages
 
 import (
+	"app/internal/logger"
 	"app/internal/video"
-	"app/pkg/logger"
 )
 
 func ErrorUrlAndFilenameCannotBeEmpty() *logger.Log {

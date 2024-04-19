@@ -3,12 +3,12 @@ package repository
 import (
 	"fmt"
 
+	"app/internal/config"
 	"app/internal/constants"
+	qconsts "app/internal/constants/query"
+	"app/internal/database"
 	"app/internal/info"
-	"app/pkg/config"
-	qconsts "app/pkg/constants/query"
-	"app/pkg/db_connect"
-	"app/pkg/user"
+	"app/internal/user"
 )
 
 type InfoRepository struct {
@@ -21,8 +21,8 @@ func NewInfoRepository(cfg *config.Config) *InfoRepository {
 
 func (r *InfoRepository) CreateInfo(nfo *info.Info) error {
 	r.cfg.DBOName = constants.DBO_WWW_Name
-	dbo := db_connect.CreateOuterDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, dbo)
+	dbo := database.CreateOuterDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, dbo)
 
 	template := qconsts.INSERT_INTO_TBL_VALUES_VAL
 	tbl := fmt.Sprintf("%s (%s, %s, %s, %s, %s)", info.TableName,
@@ -41,8 +41,8 @@ func (r *InfoRepository) CreateInfo(nfo *info.Info) error {
 
 func (r *InfoRepository) GetInfo(id int) (*info.Info, error) {
 	r.cfg.DBOName = constants.DBO_WWW_Name
-	dbo := db_connect.CreateOuterDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, dbo)
+	dbo := database.CreateOuterDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, dbo)
 
 	template := qconsts.SELECT_COL_FROM_TBL_WHERE_CND
 	col := fmt.Sprintf("%s, %s, %s, %s, %s", info.Id, info.Stream,
@@ -61,8 +61,8 @@ func (r *InfoRepository) GetInfo(id int) (*info.Info, error) {
 
 func (r *InfoRepository) GetAllInfos(urlparams *user.Pagin) (map[int]*info.Info, error) {
 	r.cfg.DBOName = constants.DBO_WWW_Name
-	dbo := db_connect.CreateOuterDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, dbo)
+	dbo := database.CreateOuterDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, dbo)
 
 	template := qconsts.PAGINATION_COL_TBL_CND_PAG_TBL_PAG_LIM
 	col := "*"
@@ -103,8 +103,8 @@ func (r *InfoRepository) GetAllInfos(urlparams *user.Pagin) (map[int]*info.Info,
 
 func (r *InfoRepository) PartiallyUpdateInfo(nfo *info.Info) error {
 	r.cfg.DBOName = constants.DBO_WWW_Name
-	dbo := db_connect.CreateOuterDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, dbo)
+	dbo := database.CreateOuterDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, dbo)
 
 	template := qconsts.UPDATE_TBL_SET_VAL_WHERE_CND
 	tbl := info.TableName
@@ -124,8 +124,8 @@ func (r *InfoRepository) PartiallyUpdateInfo(nfo *info.Info) error {
 
 func (r *InfoRepository) DeleteInfo(id int) error {
 	r.cfg.DBOName = constants.DBO_WWW_Name
-	dbo := db_connect.CreateOuterDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, dbo)
+	dbo := database.CreateOuterDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, dbo)
 
 	template := qconsts.DELETE_FROM_TBL_WHERE_CND
 	tbl := info.TableName
@@ -143,8 +143,8 @@ func (r *InfoRepository) DeleteInfo(id int) error {
 
 func (r *InfoRepository) IsInfoExists(id int) (bool, error) {
 	r.cfg.DBOName = constants.DBO_WWW_Name
-	dbo := db_connect.CreateOuterDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, dbo)
+	dbo := database.CreateOuterDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, dbo)
 
 	template := qconsts.SELECT_COL_FROM_TBL_WHERE_CND
 	col := info.Id

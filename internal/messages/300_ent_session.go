@@ -1,7 +1,7 @@
 package messages
 
 import (
-	"app/pkg/logger"
+	"app/internal/logger"
 )
 
 func ErrorCannotDeleteSession(err error) *logger.Log {

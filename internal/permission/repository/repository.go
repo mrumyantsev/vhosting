@@ -3,11 +3,11 @@ package repository
 import (
 	"fmt"
 
+	"app/internal/config"
+	qconsts "app/internal/constants/query"
+	"app/internal/database"
 	perm "app/internal/permission"
-	"app/pkg/config"
-	qconsts "app/pkg/constants/query"
-	"app/pkg/db_connect"
-	"app/pkg/user"
+	"app/internal/user"
 )
 
 type PermRepository struct {
@@ -19,8 +19,8 @@ func NewPermRepository(cfg *config.Config) *PermRepository {
 }
 
 func (r *PermRepository) GetAllPermissions(urlparams *user.Pagin) (map[int]*perm.Perm, error) {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.PAGINATION_COL_TBL_CND_PAG_TBL_PAG_LIM
 	col := "*"

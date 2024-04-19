@@ -3,15 +3,15 @@ package repository
 import (
 	"fmt"
 
+	qconsts "app/internal/constants/query"
+	"app/internal/database"
 	perm "app/internal/permission"
-	qconsts "app/pkg/constants/query"
-	"app/pkg/db_connect"
-	"app/pkg/user"
+	"app/internal/user"
 )
 
 func (r *PermRepository) SetUserPermissions(values string) error {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.INSERT_INTO_TBL_VALUES_VAL
 	tbl := fmt.Sprintf("%s (%s, %s)", perm.UPTableName, perm.UserId,
@@ -27,8 +27,8 @@ func (r *PermRepository) SetUserPermissions(values string) error {
 }
 
 func (r *PermRepository) GetUserPermissions(id int, urlparams *user.Pagin) (*perm.PermIds, error) {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.PAGINATION_COL_TBL_CND_PAG_TBL_PAG_LIM
 	col := perm.PermId
@@ -57,8 +57,8 @@ func (r *PermRepository) GetUserPermissions(id int, urlparams *user.Pagin) (*per
 }
 
 func (r *PermRepository) DeleteUserPermissions(id int, condIds string) error {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.DELETE_FROM_TBL_WHERE_CND
 	tbl := perm.UPTableName

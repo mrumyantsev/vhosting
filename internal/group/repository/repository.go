@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"reflect"
 
+	"app/internal/config"
+	qconsts "app/internal/constants/query"
+	"app/internal/database"
 	"app/internal/group"
-	"app/pkg/config"
-	qconsts "app/pkg/constants/query"
-	"app/pkg/db_connect"
-	"app/pkg/user"
+	"app/internal/user"
 )
 
 type GroupRepository struct {
@@ -21,8 +21,8 @@ func NewGroupRepository(cfg *config.Config) *GroupRepository {
 }
 
 func (r *GroupRepository) CreateGroup(grp *group.Group) error {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.INSERT_INTO_TBL_VALUES_VAL
 	tbl := fmt.Sprintf("%s (%s)", group.TableName, group.Name)
@@ -37,8 +37,8 @@ func (r *GroupRepository) CreateGroup(grp *group.Group) error {
 }
 
 func (r *GroupRepository) GetGroup(id int) (*group.Group, error) {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.SELECT_COL_FROM_TBL_WHERE_CND
 	col := fmt.Sprintf("%s, %s", group.Id, group.Name)
@@ -55,8 +55,8 @@ func (r *GroupRepository) GetGroup(id int) (*group.Group, error) {
 }
 
 func (r *GroupRepository) GetAllGroups(urlparams *user.Pagin) (map[int]*group.Group, error) {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.PAGINATION_COL_TBL_CND_PAG_TBL_PAG_LIM
 	col := "*"
@@ -93,8 +93,8 @@ func (r *GroupRepository) GetAllGroups(urlparams *user.Pagin) (map[int]*group.Gr
 }
 
 func (r *GroupRepository) PartiallyUpdateGroup(grp *group.Group) error {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.UPDATE_TBL_SET_VAL_WHERE_CND
 	tbl := group.TableName
@@ -112,8 +112,8 @@ func (r *GroupRepository) PartiallyUpdateGroup(grp *group.Group) error {
 }
 
 func (r *GroupRepository) DeleteGroup(id int) error {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.DELETE_FROM_TBL_WHERE_CND
 	tbl := group.TableName
@@ -130,8 +130,8 @@ func (r *GroupRepository) DeleteGroup(id int) error {
 }
 
 func (r *GroupRepository) IsGroupExists(idOrName interface{}) (bool, error) {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	var template, col, tbl, cnd, query string
 	var rows *sql.Rows

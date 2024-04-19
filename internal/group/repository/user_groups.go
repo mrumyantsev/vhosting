@@ -3,15 +3,15 @@ package repository
 import (
 	"fmt"
 
+	qconsts "app/internal/constants/query"
+	"app/internal/database"
 	"app/internal/group"
-	qconsts "app/pkg/constants/query"
-	"app/pkg/db_connect"
-	"app/pkg/user"
+	"app/internal/user"
 )
 
 func (r *GroupRepository) SetUserGroups(values string) error {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.INSERT_INTO_TBL_VALUES_VAL
 	tbl := fmt.Sprintf("%s (%s, %s)", group.UGTableName, group.UserId,
@@ -27,8 +27,8 @@ func (r *GroupRepository) SetUserGroups(values string) error {
 }
 
 func (r *GroupRepository) GetUserGroups(id int, urlparams *user.Pagin) (*group.GroupIds, error) {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.PAGINATION_COL_TBL_CND_PAG_TBL_PAG_LIM
 	col := group.GroupId
@@ -57,8 +57,8 @@ func (r *GroupRepository) GetUserGroups(id int, urlparams *user.Pagin) (*group.G
 }
 
 func (r *GroupRepository) DeleteUserGroups(id int, condIds string) error {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.DELETE_FROM_TBL_WHERE_CND
 	tbl := group.UGTableName

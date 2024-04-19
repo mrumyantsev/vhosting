@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	"app/internal/info"
-	"app/pkg/user"
+	"app/internal/user"
 	"github.com/gin-gonic/gin"
 )
 

@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	perm "app/internal/permission"
-	"app/pkg/user"
+	"app/internal/user"
 	"github.com/gin-gonic/gin"
 )
 

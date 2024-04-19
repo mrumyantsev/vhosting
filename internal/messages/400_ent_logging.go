@@ -1,7 +1,7 @@
 package messages
 
 import (
-	"app/pkg/logger"
+	"app/internal/logger"
 )
 
 func ErrorCannotDoLogging(err error) *logger.Log {

@@ -1,8 +1,8 @@
 package messages
 
 import (
-	"app/pkg/logger"
-	"app/pkg/user"
+	"app/internal/logger"
+	"app/internal/user"
 )
 
 func ErrorCannotBindInputData(err error) *logger.Log {

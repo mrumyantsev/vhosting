@@ -3,12 +3,12 @@ package repository
 import (
 	"fmt"
 
+	"app/internal/config"
 	"app/internal/constants"
+	qconsts "app/internal/constants/query"
+	"app/internal/database"
+	"app/internal/user"
 	"app/internal/video"
-	"app/pkg/config"
-	qconsts "app/pkg/constants/query"
-	"app/pkg/db_connect"
-	"app/pkg/user"
 )
 
 type VideoRepository struct {
@@ -21,8 +21,8 @@ func NewVideoRepository(cfg *config.Config) *VideoRepository {
 
 func (r *VideoRepository) CreateVideo(vid *video.Video) error {
 	r.cfg.DBOName = constants.DBO_WWW_Name
-	dbo := db_connect.CreateOuterDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, dbo)
+	dbo := database.CreateOuterDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, dbo)
 
 	template := qconsts.INSERT_INTO_TBL_VALUES_VAL
 	tbl := fmt.Sprintf("%s (%s, %s, %s, %s, %s)", video.TableName,
@@ -41,8 +41,8 @@ func (r *VideoRepository) CreateVideo(vid *video.Video) error {
 
 func (r *VideoRepository) GetVideo(id int) (*video.Video, error) {
 	r.cfg.DBOName = constants.DBO_WWW_Name
-	dbo := db_connect.CreateOuterDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, dbo)
+	dbo := database.CreateOuterDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, dbo)
 
 	template := qconsts.SELECT_COL_FROM_TBL_WHERE_CND
 	col := fmt.Sprintf("%s, %s, %s, %s, %s, %s", video.Id, video.Url,
@@ -61,8 +61,8 @@ func (r *VideoRepository) GetVideo(id int) (*video.Video, error) {
 
 func (r *VideoRepository) GetAllVideos(urlparams *user.Pagin) (map[int]*video.Video, error) {
 	r.cfg.DBOName = constants.DBO_WWW_Name
-	dbo := db_connect.CreateOuterDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, dbo)
+	dbo := database.CreateOuterDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, dbo)
 
 	template := qconsts.PAGINATION_COL_TBL_CND_PAG_TBL_PAG_LIM
 	col := "*"
@@ -103,8 +103,8 @@ func (r *VideoRepository) GetAllVideos(urlparams *user.Pagin) (map[int]*video.Vi
 
 func (r *VideoRepository) PartiallyUpdateVideo(vid *video.Video) error {
 	r.cfg.DBOName = constants.DBO_WWW_Name
-	dbo := db_connect.CreateOuterDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, dbo)
+	dbo := database.CreateOuterDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, dbo)
 
 	template := qconsts.UPDATE_TBL_SET_VAL_WHERE_CND
 	tbl := video.TableName
@@ -125,8 +125,8 @@ func (r *VideoRepository) PartiallyUpdateVideo(vid *video.Video) error {
 
 func (r *VideoRepository) DeleteVideo(id int) error {
 	r.cfg.DBOName = constants.DBO_WWW_Name
-	dbo := db_connect.CreateOuterDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, dbo)
+	dbo := database.CreateOuterDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, dbo)
 
 	template := qconsts.DELETE_FROM_TBL_WHERE_CND
 	tbl := video.TableName
@@ -144,8 +144,8 @@ func (r *VideoRepository) DeleteVideo(id int) error {
 
 func (r *VideoRepository) IsVideoExists(id int) (bool, error) {
 	r.cfg.DBOName = constants.DBO_WWW_Name
-	dbo := db_connect.CreateOuterDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, dbo)
+	dbo := database.CreateOuterDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, dbo)
 
 	template := qconsts.SELECT_COL_FROM_TBL_WHERE_CND
 	col := video.Id

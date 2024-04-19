@@ -3,10 +3,10 @@ package repository
 import (
 	"fmt"
 
+	"app/internal/config"
+	qconsts "app/internal/constants/query"
+	"app/internal/database"
 	sess "app/internal/session"
-	"app/pkg/config"
-	qconsts "app/pkg/constants/query"
-	"app/pkg/db_connect"
 )
 
 type SessRepository struct {
@@ -18,8 +18,8 @@ func NewSessRepository(cfg *config.Config) *SessRepository {
 }
 
 func (r *SessRepository) CreateSession(session *sess.Session) error {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.INSERT_INTO_TBL_VALUES_VAL
 	tbl := fmt.Sprintf("%s (%s, %s)", sess.TableName, sess.Content, sess.CreationDate)
@@ -35,8 +35,8 @@ func (r *SessRepository) CreateSession(session *sess.Session) error {
 }
 
 func (r *SessRepository) GetSessionAndDate(token string) (*sess.Session, error) {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.SELECT_COL_FROM_TBL_WHERE_CND
 	col := fmt.Sprintf("%s, %s", sess.Content, sess.CreationDate)
@@ -65,8 +65,8 @@ func (r *SessRepository) GetSessionAndDate(token string) (*sess.Session, error) 
 }
 
 func (r *SessRepository) DeleteSession(token string) error {
-	db := db_connect.CreateLocalDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, db)
+	db := database.CreateLocalDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, db)
 
 	template := qconsts.DELETE_FROM_TBL_WHERE_CND
 	tbl := sess.TableName

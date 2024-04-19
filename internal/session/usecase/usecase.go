@@ -1,8 +1,8 @@
 package usecase
 
 import (
+	"app/internal/auth"
 	sess "app/internal/session"
-	"app/pkg/auth"
 	"github.com/gin-gonic/gin"
 )
 

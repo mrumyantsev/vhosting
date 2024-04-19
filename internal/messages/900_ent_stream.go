@@ -1,8 +1,8 @@
 package messages
 
 import (
-	"app/pkg/logger"
-	"app/pkg/stream"
+	"app/internal/logger"
+	"app/internal/stream"
 	"github.com/deepch/vdk/av"
 )
 

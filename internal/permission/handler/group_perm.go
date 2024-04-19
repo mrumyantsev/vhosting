@@ -1,8 +1,8 @@
 package handler
 
 import (
+	"app/internal/logger"
 	msg "app/internal/messages"
-	"app/pkg/logger"
 	"github.com/gin-gonic/gin"
 )
 

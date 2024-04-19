@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	perm "app/internal/permission"
-	"app/pkg/user"
+	"app/internal/user"
 )
 
 func (u *PermUseCase) SetGroupPermissions(id int, permIds *perm.PermIds) error {

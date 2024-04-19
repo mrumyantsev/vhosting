@@ -2,7 +2,7 @@ package messages
 
 import (
 	"app/internal/info"
-	"app/pkg/logger"
+	"app/internal/logger"
 )
 
 func ErrorStreamCannotBeEmpty() *logger.Log {

@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"time"
 
-	"app/pkg/logger"
+	"app/internal/logger"
 )
 
 func InfoEstablishedOpenedDBConnection(timeSinceOpen time.Time) *logger.Log {

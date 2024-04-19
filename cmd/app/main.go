@@ -1,10 +1,10 @@
 package main
 
 import (
+	"app/internal/config"
+	logger "app/internal/logger"
 	"app/internal/messages"
-	"app/pkg/config"
-	logger "app/pkg/logger"
-	"app/pkg/server"
+	"app/internal/server"
 
 	"github.com/joho/godotenv"
 )

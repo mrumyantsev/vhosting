@@ -2,7 +2,7 @@ package messages
 
 import (
 	"app/internal/group"
-	"app/pkg/logger"
+	"app/internal/logger"
 )
 
 func ErrorGroupNameCannotBeEmpty() *logger.Log {

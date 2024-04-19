@@ -3,8 +3,8 @@ package usecase
 import (
 	"strconv"
 
+	"app/internal/user"
 	"app/internal/video"
-	"app/pkg/user"
 	"github.com/gin-gonic/gin"
 )
 

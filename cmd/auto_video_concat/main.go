@@ -13,11 +13,12 @@ import (
 	"path/filepath"
 	"time"
 
+	"app/internal/config"
 	"app/internal/constants"
-	"app/pkg/config"
-	qconsts "app/pkg/constants/query"
-	"app/pkg/db_connect"
-	"app/pkg/stream/usecase"
+	qconsts "app/internal/constants/query"
+	"app/internal/database"
+	"app/internal/stream/usecase"
+
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
@@ -100,8 +101,8 @@ func main() {
 
 func (r *Repo) getNonconcatedPaths() (*[]NonCatVideo, error) {
 	r.cfg.DBOName = constants.DBO_L3_Name
-	dbo := db_connect.CreateOuterDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, dbo)
+	dbo := database.CreateOuterDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, dbo)
 
 	template := qconsts.SELECT_COL_FROM_TBL_WHERE_CND
 	col := "\"ID\", \"codeMP\", \"startDatetime\", \"durationRecord\""
@@ -138,8 +139,8 @@ func (r *Repo) getNonconcatedPaths() (*[]NonCatVideo, error) {
 
 func (r *Repo) getVideoPaths(pathStream, startDatetime string, durationRecord int) (*[]string, error) {
 	r.cfg.DBOName = constants.DBO_L3_Name
-	dbo := db_connect.CreateOuterDBConnection(r.cfg)
-	defer db_connect.CloseDBConnection(r.cfg, dbo)
+	dbo := database.CreateOuterDBConnection(r.cfg)
+	defer database.CloseDBConnection(r.cfg, dbo)
 
 	template := qconsts.SELECT_VIDEO_PATH_BETWEEN
 	query := fmt.Sprintf(template, pathStream, pathStream, startDatetime, pathStream, startDatetime, durationRecord)
