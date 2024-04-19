@@ -19,8 +19,12 @@ func FatalFailureOnServerRunning(err error) *logger.Log {
 	return &logger.Log{ErrCode: 20, Message: "Failure on server running. Error: " + err.Error(), ErrLevel: logger.ErrLevelFatal}
 }
 
+func FatalFailureOnServerShutdown(err error) *logger.Log {
+	return &logger.Log{ErrCode: 21, Message: "Failure on server shutdown. Error: " + err.Error(), ErrLevel: logger.ErrLevelFatal}
+}
+
 func WarningCannotGetLocalIP(err error) *logger.Log {
-	return &logger.Log{ErrCode: 21, Message: "Cannot get local IP. Error: " + err.Error(), ErrLevel: logger.ErrLevelWarning}
+	return &logger.Log{ErrCode: 22, Message: "Cannot get local IP. Error: " + err.Error(), ErrLevel: logger.ErrLevelWarning}
 }
 
 func InfoRecivedSignal(signal os.Signal) *logger.Log {
