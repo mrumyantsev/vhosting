@@ -1,22 +1,10 @@
-DROP TABLE IF EXISTS public.videos;
-DROP TABLE IF EXISTS public.infos;
-DROP TABLE IF EXISTS public.user_groups;
-DROP TABLE IF EXISTS public.user_perms;
-DROP TABLE IF EXISTS public.group_perms;
-DROP TABLE IF EXISTS public.logs;
-DROP TABLE IF EXISTS public.sessions;
-DROP TABLE IF EXISTS public.users;
-DROP TABLE IF EXISTS public.groups;
-DROP TABLE IF EXISTS public.perms;
-
--------------------------------------------------------------------------------
-
 CREATE TABLE IF NOT EXISTS public.perms (
     id        INTEGER      NOT NULL UNIQUE,
     name      VARCHAR(100) NOT NULL UNIQUE,
     code_name VARCHAR(30)  NOT NULL UNIQUE,
 	CONSTRAINT pk_perms PRIMARY KEY (id)
 );
+
 INSERT INTO public.perms (id, name, code_name) VALUES
 ( 0, 'Can create a User',                'post_user'),
 ( 1, 'Can get a User',                   'get_user'),
@@ -56,7 +44,7 @@ INSERT INTO public.perms (id, name, code_name) VALUES
 
 (50, 'Can download a File',               'download_file');
 
--------------------------------------------------------------------------------
+
 
 CREATE TABLE IF NOT EXISTS public.groups (
     id   SERIAL      NOT NULL UNIQUE,
@@ -64,7 +52,7 @@ CREATE TABLE IF NOT EXISTS public.groups (
 	CONSTRAINT pk_groups PRIMARY KEY (id)
 );
 
--------------------------------------------------------------------------------
+
 
 CREATE TABLE IF NOT EXISTS public.users (
     id            SERIAL                   NOT NULL UNIQUE,
@@ -79,11 +67,13 @@ CREATE TABLE IF NOT EXISTS public.users (
     last_login    TIMESTAMP WITH TIME ZONE NOT NULL,
 	CONSTRAINT pk_users PRIMARY KEY (id)
 );
+
 INSERT INTO public.users (id, username, password_hash, is_active, is_superuser, is_staff, first_name, last_name, joining_date, last_login) VALUES
 (0, 'admin', '614240232425318c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', True, True, False, '', '', '2022-05-11 09:32:41.115644+03', '2022-05-11 09:32:41.115644+03');
+
 ALTER SEQUENCE users_id_seq RESTART WITH 1;
 
--------------------------------------------------------------------------------
+
 
 CREATE TABLE IF NOT EXISTS public.sessions (
     id            SERIAL                   NOT NULL UNIQUE,
@@ -92,7 +82,7 @@ CREATE TABLE IF NOT EXISTS public.sessions (
     CONSTRAINT pk_sessions PRIMARY KEY (id)
 );
 
--------------------------------------------------------------------------------
+
 
 CREATE TABLE IF NOT EXISTS public.logs (
     id             SERIAL                   NOT NULL UNIQUE,
@@ -107,7 +97,7 @@ CREATE TABLE IF NOT EXISTS public.logs (
     creation_date  TIMESTAMP WITH TIME ZONE
 );
 
--------------------------------------------------------------------------------
+
 
 CREATE TABLE IF NOT EXISTS public.group_perms (
     id       SERIAL  NOT NULL UNIQUE,
@@ -125,7 +115,7 @@ CREATE TABLE IF NOT EXISTS public.group_perms (
 		ON DELETE CASCADE
 );
 
--------------------------------------------------------------------------------
+
 
 CREATE TABLE IF NOT EXISTS public.user_perms (
     id      SERIAL  NOT NULL UNIQUE,
@@ -143,7 +133,7 @@ CREATE TABLE IF NOT EXISTS public.user_perms (
 		ON DELETE CASCADE
 );
 
--------------------------------------------------------------------------------
+
 
 CREATE TABLE IF NOT EXISTS public.user_groups (
     id       SERIAL  NOT NULL UNIQUE,
@@ -161,7 +151,7 @@ CREATE TABLE IF NOT EXISTS public.user_groups (
 		ON DELETE CASCADE
 );
 
--------------------------------------------------------------------------------
+
 
 CREATE TABLE IF NOT EXISTS public.infos (
     id            SERIAL                   NOT NULL UNIQUE,
@@ -178,7 +168,7 @@ CREATE TABLE IF NOT EXISTS public.infos (
 		ON DELETE CASCADE
 );
 
--------------------------------------------------------------------------------
+
 
 CREATE TABLE IF NOT EXISTS public.videos (
     id            SERIAL                   NOT NULL UNIQUE,
