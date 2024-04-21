@@ -13,18 +13,22 @@ import (
 	"path/filepath"
 	"time"
 
-	"app/internal/config"
-	"app/internal/constants"
-	qconsts "app/internal/constants/query"
-	"app/internal/database"
-	"app/internal/stream/usecase"
+	"github.com/mrumyantsev/video-hosting/internal/config"
+	"github.com/mrumyantsev/video-hosting/internal/constants"
+	qconsts "github.com/mrumyantsev/video-hosting/internal/constants/query"
+	"github.com/mrumyantsev/video-hosting/internal/database"
+	"github.com/mrumyantsev/video-hosting/internal/stream/usecase"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
-const defTmpDirPath = "./tmp"
+const (
+	defTmpDirPath           = "./tmp"
+	permDir                 = 0775
+	repeatMins              = 60
+	tempfileRemoveDelaySecs = 1
+)
 
 type NonCatVideo struct {
 	Id             int
@@ -37,65 +41,53 @@ type Repo struct {
 	cfg *config.Config
 }
 
-func main() {
-	if err := godotenv.Load("./configs/.env"); err != nil {
-		log.Println("cannot load env file. error:", err)
-		return
-	}
-	log.Println("env loaded")
-
-	cfg, err := config.LoadConfig("./configs/config.yml")
-	if err != nil {
-		log.Println("cannot load config file. error:", err)
-		return
-	}
-	log.Println("config loaded")
-
-	repo := Repo{
-		cfg: cfg,
-	}
-	repo.cfg = cfg
+func autoVideoConcat(cfg *config.Config) {
+	repo := &Repo{cfg: cfg}
 
 	nonCatPaths, err := repo.getNonconcatedPaths()
 	if err != nil {
-		log.Println("cannot get non concated Paths. error:", err)
+		log.Fatal("cannot get non concated paths. error:", err)
 	}
+
 	if nonCatPaths == nil {
-		log.Println("no video to concat, restart loop")
+		log.Fatal("no video to concat, restart loop")
 	}
 
 	if !usecase.IsPathExists(defTmpDirPath) {
-		os.MkdirAll(defTmpDirPath, 0777)
+		if err = os.MkdirAll(defTmpDirPath, permDir); err != nil {
+			log.Fatal("cannot make a video folder")
+		}
 	}
 
 	for _, val := range *nonCatPaths {
 		paths, err := repo.getVideoPaths(val.CodeMP, val.StartDatetime, val.DurationRecord)
 		if err != nil {
-			log.Println("cannot get video paths from db. error:", err)
-			return
+			log.Fatal("cannot get video paths from db. error:", err)
 		}
 
 		tmpFilePath := defTmpDirPath + "/" + val.CodeMP + ".txt"
 
-		createFile(tmpFilePath)
+		if err = createFile(tmpFilePath); err != nil {
+			log.Fatal("cannot create a video")
+		}
 
-		if err := fillPathsFile(tmpFilePath, paths); err != nil {
-			log.Println("cannot fill paths-file properly. error:", err)
+		if err = fillPathsFile(tmpFilePath, paths); err != nil {
+			log.Fatal("cannot fill paths-file properly. error:", err)
 		}
 
 		outputVideoPath := tmpFilePath + "/" + fmt.Sprintf("%d_%s.mp4", val.Id, val.CodeMP)
 
-		if err := concatVideo(tmpFilePath, outputVideoPath); err != nil {
-			log.Println("cannot concat: error in command or output video exists")
+		if err = concatVideo(tmpFilePath, outputVideoPath); err != nil {
+			log.Fatal("cannot concat: error in command or output video exists")
 		}
 
-		time.Sleep(1 * time.Second)
+		time.Sleep(time.Duration(tempfileRemoveDelaySecs) * time.Second)
 
-		if err := os.Remove(tmpFilePath); err != nil {
-			log.Println("cannot delete file. error:", err)
+		if err = os.Remove(tmpFilePath); err != nil {
+			log.Fatal("cannot delete file. error:", err)
 		}
 
-		time.Sleep(60000 * time.Second)
+		time.Sleep(time.Duration(repeatMins) * time.Minute)
 	}
 }
 
@@ -114,19 +106,21 @@ func (r *Repo) getNonconcatedPaths() (*[]NonCatVideo, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	nonCatPaths := []NonCatVideo{}
 	for rows.Next() {
 		var nonCatVid NonCatVideo
-		if err := rows.Scan(&nonCatVid.Id, &nonCatVid.CodeMP, &nonCatVid.StartDatetime,
+
+		if err = rows.Scan(&nonCatVid.Id, &nonCatVid.CodeMP, &nonCatVid.StartDatetime,
 			&nonCatVid.DurationRecord); err != nil {
 			return nil, err
 		}
+
 		nonCatPaths = append(nonCatPaths, nonCatVid)
 	}
 
-	if err := rows.Err(); err != nil {
+	if err = rows.Err(); err != nil {
 		return nil, err
 	}
 
@@ -146,19 +140,19 @@ func (r *Repo) getVideoPaths(pathStream, startDatetime string, durationRecord in
 	query := fmt.Sprintf(template, pathStream, pathStream, startDatetime, pathStream, startDatetime, durationRecord)
 
 	rows, err := dbo.Query(query)
-
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	var paths []string
 	var path string
 
 	for rows.Next() {
-		if err := rows.Scan(&path); err != nil {
+		if err = rows.Scan(&path); err != nil {
 			return &paths, err
 		}
+
 		paths = append(paths, path)
 	}
 
@@ -167,40 +161,43 @@ func (r *Repo) getVideoPaths(pathStream, startDatetime string, durationRecord in
 
 func createFile(filepath string) error {
 	f, err := os.Create(filepath)
-	defer f.Close()
 	if err != nil {
 		return err
 	}
+	defer func() { _ = f.Close() }()
+
 	return nil
 }
 
 func fillPathsFile(filepath string, data *[]string) error {
 	f, err := os.OpenFile(filepath, os.O_WRONLY, os.ModeAppend)
-	defer func() {
-		if err2 := f.Close(); err2 != nil {
-			err = err2
-		}
-	}()
 	if err != nil {
 		return err
 	}
+	defer func() { _ = f.Close() }()
+
 	for _, path := range *data {
 		line := "file '" + path + "'\n"
-		if _, err := f.Write([]byte(line)); err != nil {
+
+		if _, err = f.Write([]byte(line)); err != nil {
 			return err
 		}
 	}
+
 	return nil
 }
 
 func concatVideo(pathsFile, outputVideo string) error {
 	cmd := exec.Command("ffmpeg", "-f", "concat", "-safe", "0", "-i",
 		pathsFile, "-c", "copy", outputVideo)
+
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
+
 	if err := cmd.Run(); err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -209,45 +206,50 @@ func InitVideoSending(ctx *gin.Context) {
 	method := "POST"
 	vidPath := "./tmp/videoplayback.mp4"
 
-	payload := &bytes.Buffer{}
+	payload := new(bytes.Buffer)
+
 	writer := multipart.NewWriter(payload)
-	_ = writer.WriteField("id", "123")
-	file, errFile2 := os.Open(vidPath)
-	defer file.Close()
+	defer func() { _ = writer.Close() }()
 
-	part2,
-		errFile2 := writer.CreateFormFile("file", filepath.Base(vidPath))
-	_, errFile2 = io.Copy(part2, file)
-	if errFile2 != nil {
-		fmt.Println(errFile2)
-		return
-	}
-
-	err := writer.Close()
+	err := writer.WriteField("id", "123")
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatal(err)
 	}
 
-	client := &http.Client{}
+	file, err := os.Open(vidPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer func() { _ = file.Close() }()
+
+	part2, err := writer.CreateFormFile("file", filepath.Base(vidPath))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if _, err = io.Copy(part2, file); err != nil {
+		log.Fatal(err)
+	}
+
+	client := new(http.Client)
+
 	req, err := http.NewRequest(method, url, payload)
-
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatal(err)
 	}
+
 	req.Header.Set("Content-Type", writer.FormDataContentType())
+
 	res, err := client.Do(req)
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatal(err)
 	}
-	defer res.Body.Close()
+	defer func() { _ = res.Body.Close() }()
 
-	body, err := ioutil.ReadAll(res.Body)
+	data, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatal(err)
 	}
-	fmt.Println(string(body))
+
+	log.Printf("accept status: %s\n", string(data))
 }
