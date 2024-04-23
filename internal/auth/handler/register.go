@@ -16,8 +16,8 @@ func RegisterHTTPEndpoints(router *gin.Engine, cfg *config.Config, uc auth.AuthU
 
 	authRoute := router.Group("/auth")
 	{
-		authRoute.POST("/signin", h.SignIn)
-		authRoute.POST("/change_password", h.ChangePassword)
-		authRoute.GET("/signout", h.SignOut)
+		authRoute.POST("/sign-in", h.SignIn)
+		authRoute.POST("/change-password", h.ChangePassword)
+		authRoute.GET("/sign-out", h.SignOut)
 	}
 }
