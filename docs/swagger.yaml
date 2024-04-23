@@ -1,0 +1,165 @@
+basePath: /
+definitions:
+  auth.Namepass:
+    properties:
+      id:
+        type: integer
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  logger.Log:
+    properties:
+      clientIP:
+        type: string
+      creationDate:
+        type: string
+      errCode:
+        type: integer
+      errLevel:
+        description: '"info", "warning", "error", "fatal"'
+        type: string
+      id:
+        type: integer
+      message: {}
+      requestMethod:
+        description: '"POST", "GET", "PATCH", "DELETE"'
+        type: string
+      requestPath:
+        type: string
+      sessionOwner:
+        type: string
+      statusCode:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Server API for Video Hosting Service
+  title: Video Hosting
+  version: "1.0"
+paths:
+  /auth/change-password:
+    post:
+      consumes:
+      - application/json
+      description: change password
+      operationId: change-password
+      parameters:
+      - description: account info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/auth.Namepass'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/logger.Log'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/logger.Log'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/logger.Log'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/logger.Log'
+      summary: ChangePassword
+      tags:
+      - auth
+  /auth/sign-in:
+    post:
+      consumes:
+      - application/json
+      description: login
+      operationId: login
+      parameters:
+      - description: credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/auth.Namepass'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/logger.Log'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/logger.Log'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/logger.Log'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/logger.Log'
+      summary: SignIn
+      tags:
+      - auth
+  /auth/sign-out:
+    get:
+      consumes:
+      - application/json
+      description: sign out
+      operationId: sign-out
+      parameters:
+      - description: account info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/auth.Namepass'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/logger.Log'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/logger.Log'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/logger.Log'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/logger.Log'
+      summary: SignOut
+      tags:
+      - auth
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

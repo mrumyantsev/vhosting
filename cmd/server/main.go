@@ -45,12 +45,27 @@ import (
 	videohandler "github.com/mrumyantsev/video-hosting/internal/video/handler"
 	videorepo "github.com/mrumyantsev/video-hosting/internal/video/repository"
 	videousecase "github.com/mrumyantsev/video-hosting/internal/video/usecase"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	_ "github.com/mrumyantsev/video-hosting/docs"
 )
 
 const (
 	configsDir string = "./configs/"
 )
 
+// @title       Video Hosting
+// @version     1.0
+// @description Server API for Video Hosting Service
+
+// @host     localhost:8080
+// @BasePath /
+
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 func main() {
 	// Read .env file
 	err := godotenv.Load(configsDir + ".env")
@@ -131,6 +146,9 @@ func main() {
 		userUseCase, logUseCase, authUseCase, sessUseCase)
 	downloadhandler.RegisterHTTPEndpoints(router, cfg, downloadUseCase, logUseCase,
 		authUseCase, sessUseCase, userUseCase)
+
+	// Register Swagger handler for Server API documentation
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// Debug mode
 	if cfg.ServerDebugEnable {

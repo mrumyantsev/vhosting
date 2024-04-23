@@ -32,6 +32,18 @@ func NewAuthHandler(cfg *config.Config, useCase auth.AuthUseCase,
 	}
 }
 
+// @Summary SignIn
+// @Tags auth
+// @Description login
+// @ID login
+// @Accept  json
+// @Produce  json
+// @Param input body auth.Namepass true "credentials"
+// @Success 200 {string} string "token"
+// @Failure 400,404 {object} logger.Log
+// @Failure 500 {object} logger.Log
+// @Failure default {object} logger.Log
+// @Router /auth/sign-in [post]
 func (h *AuthHandler) SignIn(ctx *gin.Context) {
 	log := logger.Init(ctx)
 
@@ -80,6 +92,18 @@ func (h *AuthHandler) SignIn(ctx *gin.Context) {
 	h.logUseCase.ReportWithToken(ctx, log, msg.InfoYouHaveSuccessfullySignedIn(), newToken)
 }
 
+// @Summary ChangePassword
+// @Tags auth
+// @Description change password
+// @ID change-password
+// @Accept  json
+// @Produce  json
+// @Param input body auth.Namepass true "account info"
+// @Success 200 {integer} integer 1
+// @Failure 400,404 {object} logger.Log
+// @Failure 500 {object} logger.Log
+// @Failure default {object} logger.Log
+// @Router /auth/change-password [post]
 func (h *AuthHandler) ChangePassword(ctx *gin.Context) {
 	log := logger.Init(ctx)
 
@@ -131,6 +155,18 @@ func (h *AuthHandler) ChangePassword(ctx *gin.Context) {
 	h.logUseCase.Report(ctx, log, msg.InfoYouHaveSuccessfullyChangedPassword())
 }
 
+// @Summary SignOut
+// @Tags auth
+// @Description sign out
+// @ID sign-out
+// @Accept  json
+// @Produce  json
+// @Param input body auth.Namepass true "account info"
+// @Success 200 {integer} integer 1
+// @Failure 400,404 {object} logger.Log
+// @Failure 500 {object} logger.Log
+// @Failure default {object} logger.Log
+// @Router /auth/sign-out [get]
 func (h *AuthHandler) SignOut(ctx *gin.Context) {
 	log := logger.Init(ctx)
 
