@@ -1,72 +1,145 @@
-# Backend Server Written in Go
+# Видеохостинг
 
-This is my prototype of REST API which is fulfilled in Go. It responses on messages from varies frontend web applications or mobile devices by using HTTP protocol and certain commands which can be obtained in file `Tech Info.docx`. When resource is requested to this server and your client device has its necessary privileges, then you're up to get, modify, delete or create new entries in database resources.
+**Видеохостинг** - это бэкенд-сервис на архитектуре REST, предназначенный для выдачи ссылок на скачивание видеозаписей с камер видеонаблюдения для пользователей приложения. Данный сервис не сохраняет видеотрансляции, а использует файлы сервера-хранилища с фрагментами трансляции для "склейки" в фоновом режиме итогового видеофайла, используя утилиту `ffmpeg`.
 
-To may have access to manage resources firstly sign in on system. Server will check your profile and will grant you access if your profile is activated. You can register more profiles but always awaits when superuser will activate your profile.
+Дополнительно, сервис может подключаться по запросу к **RTSP**-видеопотоку с конвертацией его в **WebRTC**, для просмотра видео с камер видеонаблюдения в реальном времени через фронтенд.
 
-You can also use stream watch test function. The list of newly added links to `stream_config.json` file will be available on stream watch test page.
+## Обработчик заявок
 
-Stream recording is provided by sub-application named `auto_video_concat`. It concatenates video files into united files, and can be downloaded by this server via certain URL-request.
+Фоновый обработчик заявок производит сборку видео исходя из даты-времени начала и даты-времени конца запрашиваемой видеозаписи, включая в сборку соответствующие времени файлы в файловом хранилище. Исходные файлы записи с камер очень короткие, длительностью несколько минут каждый.
 
-The stream watch test page is available by this address:
+## Администрирование
 
-`127.0.0.1:8000/stream`
+У сервиса существуют различные привилегии для штатных сотрудников, суперпользователей и пользователей. Каждый зарегистрированный пользователь может относиться к определенной группе прав, например: пользователю доступно скачивать видеозаписи и отправлять заявки. Администраторам (штатные сотрудники, суперпользователи) разрешается также удалять пользователей или перемещать их в группы прав.
 
-# Full List of Available URL Requests
+Помимо групп со стандартными наборами прав, есть возможность назначить или убрать исключительные полномочия.
 
-* POST   /auth/signin
-* POST   /auth/change_password
-* POST   /auth/signout
-* POST   /user
-* GET    /user/:id
-* GET    /user/all
-* POST   /user/change_password
-* PATCH  /user/:id
-* DELETE /user/:id
-* POST   /group
-* GET    /group/:id
-* GET    /group/all
-* PATCH  /group/:id
-* DELETE /group/:id
-* POST   /group/user/:id
-* GET    /group/user/:id
-* DELETE /group/user/:id
-* GET    /perm/all
-* POST   /perm/user/:id
-* GET    /perm/user/:id
-* DELETE /perm/user/:id
-* POST   /perm/group/:id
-* GET    /perm/group/:id
-* DELETE /perm/group/:id
-* POST   /info
-* GET    /info/:id
-* GET    /info/all
-* PATCH  /info/:id
-* DELETE /info/:id
-* POST   /video
-* GET    /video/:id
-* GET    /video/all
-* PATCH  /video/:id
-* DELETE /video/:id
-* GET    /stream/get/:id
-* GET    /stream/get/all
+Создаваемые пользователями аккаунты всегда ожидают своей активации уполномоченными сотрудниками.
 
-# How to use it
+## Авторизация
 
-1. Create an `.env` file in directory `./configs/` and post variables from example `.env.example`.
-2. Create database named "video_info" in your DBMS and create tables by executing
-SQL query file named `up_database.sql`.
-3. Build a binary with this command:
-`go build -o ./build ./cmd/app`
-4. You have to install or update several AV-libraries.
-On Xubuntu 20.04 or higher post it to install/update all libraries:
-`sudo apt-get install libavformat-dev`
-`sudo apt-get install libavresample-dev`
-`sudo apt-get install libavcodec-dev`
-On Debian 11.3 or higher - install/update only two of those:
-`apt install libavformat-dev`
-`apt install libavresample-dev`
-5. Make sure you have nginx installed by executing command:
-`systemctl status nginx`
-If it does not installed you have to install it by this command:
-`apt install libpq-dev postgresql postgresql-contrib nginx curl`
+Сервис использует авторизацию по наличию JWT-токенов в заголовках HTTP-запросов. Истекший по времени токен невозможно использовать для авторизации в системе (предусмотрена защита).
+
+## API
+
+Все виды запросов и ответов к северному API описаны в файле [API.md](./API.md).
+
+### Тестирование
+
+Тестовые запросы к API для инструментов **Postman** и **Thunder Client** находятся в директории `test`.
+
+### Swagger
+
+Запустите сервер и перейдите на страницу с документацией в веб-браузере.
+
+```
+http://localhost:8080/swagger/index.html
+```
+
+## Конфигурация
+
+Список файлов, отвечающих за настройки конфигурации сервиса:
+
+- `./configs/.env`;
+- `./configs/config.json`;
+- `./configs/stream_config.json`.
+
+Подробная информация по конфигурации серверного приложения находится в файле [CONFIG.md](./CONFIG.md).
+
+## Коды ошибок
+
+Сервер имеет собственный набор кодов ошибок, возникающих в тех или иных неудачных обстоятельствах. Полный список таких кодов ошибок находится в файле [ERRCODES.md](./ERRCODES.md).
+
+## Список зависимостей
+
+* [Go](https://go.dev/) минимальной версии **1.18**.
+* [FFmpeg](https://ffmpeg.org/).
+* [Docker](https://www.docker.com/).
+
+## Создание файла окружения
+
+Создайте файл окружения из шаблона.
+
+```
+cp ./template.env ./.env
+```
+
+Добавьте значения следующим переменным.
+
+``` Sh
+DBO_PASSWORD='YourPasswordForOuterDatabase'
+DB_PASSWORD='YourPasswordForInnerDatabase'
+HASHING_PASSWORD_SALT='YourSecretForPassword'
+HASHING_TOKEN_SIGNING_KEY='YourJWTTokenSigningKey'
+```
+
+## Развертывание с Docker
+
+Выполните автоматическую миграцию базы данных.
+
+```
+make migrate
+```
+
+Выполните сборку при помощи Docker.
+
+**Для Windows и macOS:**
+
+```
+docker-compose build
+```
+
+**Для Linux:**
+
+```
+docker compose build
+```
+
+Запустите приложение в Docker-контейнере.
+
+**Для Windows и macOS:**
+
+```
+docker-compose up
+```
+
+**Для Linux:**
+
+```
+docker compose up
+```
+
+## Локальные установка и запуск
+
+Установите библиотеки FFmpeg (если они отсутствуют на вашем компьютере).
+
+**Для Linux:**
+
+```
+sudo apt-get update
+sudo apt-get install -y libavformat-dev libavresample-dev libavcodec-dev
+```
+
+Выполните сборку сервера.
+
+```
+make build
+```
+
+Запустите собранный сервер.
+
+```
+make run
+```
+
+(Дополнительно.) Выполните быстрый запуск сервера (во временной директории).
+
+```
+make
+```
+
+(Дополнительно.) Сгенерируйте документацию Swagger для обновления серверного API.
+
+```
+make swag
+```
