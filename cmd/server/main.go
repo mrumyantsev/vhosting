@@ -68,7 +68,7 @@ const (
 // @name Authorization
 func main() {
 	// Read .env file
-	err := godotenv.Load(configsDir + ".env")
+	err := godotenv.Load("./.env")
 	if err != nil {
 		logger.Print(msg.FatalFailedToLoadEnvironmentFile(err))
 
