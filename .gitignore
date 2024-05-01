@@ -1,4 +1,6 @@
 build/
 media/
 tmp/
+
+.env
 stream_config.json
